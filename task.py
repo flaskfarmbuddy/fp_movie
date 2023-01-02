@@ -54,10 +54,11 @@ class Task(object):
             db_item.country = db_item.meta['country'][0] if len(db_item.meta['country']) > 0 else '정보없음'
             
             lang = SupportString.language_info(keyword)
-            P.logger.debug(f"[keyword] {lang}")
-            if lang[0] > 80:
-                db_item.is_hangul_title = True
-
+            if type(lang) != type(False):
+                P.logger.debug(f"[keyword] {lang}")
+                if lang[0] > 80:
+                    db_item.is_hangul_title = True
+                    
             return
         else:
             Task.move_by_status(db_item, "FAIL_MATCH_META")
@@ -89,9 +90,9 @@ class Task(object):
             tmp = os.path.splitext(db_item.main_video_filename)
             for ext in ['.smi', '.srt', '.ko.srt', '.ko.smi']:
                 _ = os.path.join(db_item.source_parent, '[SUBTITLE]', tmp[0] + ext)
-                if os.path.exists(_):
+                if os.path.exists(_) and not os.path.exists(os.path.join(db_item.source_path, tmp[0] + ext)):
                     shutil.move(_, db_item.source_path)
-
+                    
 
 
 
