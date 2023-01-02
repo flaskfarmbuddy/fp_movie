@@ -79,11 +79,11 @@ class Task(object):
                         max_size = size
         if db_item.main_video_filename != None:
             for _ in P.ModelSetting.get_list('basic_is_hardsub_check', ' '):
-                if _ in db_item.main_video_filename:
+                if _ in db_item.main_video_filename.lower():
                     db_item.is_hard_subtitle = True
                     break
             for _ in P.ModelSetting.get_list('basic_is_vod_check', ' '):
-                if _ in db_item.main_video_filename:
+                if _ in db_item.main_video_filename.lower():
                     db_item.is_vod = True
                     break
             
