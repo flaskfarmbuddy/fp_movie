@@ -216,11 +216,17 @@ class Task(object):
                             shutil.move(p, subtitle_folder)
                     elif tmp[-1] in ['.mkv', '.mp4']:
                         os.makedirs(_, exist_ok=True)
-                        shutil.move(p, _)
+                        if os.path.exists(os.path.join(_, name)):
+                            P.logger.error(f"Exception: {name} duplicate")
+                        else:
+                            shutil.move(p, _)
                     else:
                         wrong = os.path.join(error_folder, 'WRONG_FILE')
                         os.makedirs(wrong, exist_ok=True)
-                        shutil.move(p, wrong)
+                        if os.path.exists(os.path.join(wrong, name)):
+                            P.logger.error(f"Exception: {name} duplicate")
+                        else:
+                            shutil.move(p, wrong)
             except Exception as e: 
                 P.logger.error(f"Exception:{str(e)}")
                 P.logger.error(traceback.format_exc())
@@ -414,5 +420,12 @@ class Task(object):
         P.logger.error(f"STATUS: {status}")
         target = os.path.join(db_item.source_parent, '[ERROR]', status)
         db_item.result_folder = os.path.join(target, db_item.source_name)
+        count = 0
+        while True:
+            if os.path.exists(db_item.result_folder):
+                count += 1
+                db_item.result_folder = os.path.join(target, db_item.source_name + f' [{count}]')
+            else:
+                break
         os.makedirs(target, exist_ok=True)
         shutil.move(db_item.source_path, target)
