@@ -125,7 +125,7 @@ class Task(object):
                     if rule[0] == 'ALL':
                         remove = True
                     else:
-                        if _file in rule:
+                        if _file.lower() in rule:
                             remove = False
                         else:
                             remove = True
