@@ -17,9 +17,9 @@ class Task(object):
         name = re.sub("\s{2,}", ' ', name)
 
         regex_list = [
+            r'^(?P<keyword>.*?)\s+\((?P<year>\d{4})\)',
             r'^(?P<keyword>.*?).(?P<year>\d{4})',
             r'^(?P<keyword>.*?)(?P<year>\d{4})',
-            r'^(?P<keyword>.*?)\s+\((?P<year>\d{4})\)',
         ]
         for regex in regex_list:
             match = re.search(regex, name)
