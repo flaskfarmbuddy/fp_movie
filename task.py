@@ -17,6 +17,7 @@ class Task(object):
         name = re.sub("\s{2,}", ' ', name)
 
         regex_list = [
+            r'^(?P<keyword>M[DNTCWV]\d+?)\s+\((?P<year>\d{4})\)',   # nova: 코드 형식 폴더 인식용
             r'^(?P<keyword>.*?)\s+\((?P<year>\d{4})\)',
             r'^(?P<keyword>.*?).(?P<year>\d{4})',
             r'^(?P<keyword>.*?)(?P<year>\d{4})',
