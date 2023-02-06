@@ -6,6 +6,7 @@ from tool import ToolNotify
 
 from .model import ModelFPMovieItem
 from .setup import *
+import time
 
 
 class Task(object):
@@ -313,6 +314,7 @@ class Task(object):
                             'apikey': F.SystemModelSetting.get('apikey'),
                             'mode': 'ADD',
                         }
+                        time.sleep(int(plex_info['DELAY']))
                         res = requests.post(url, data=data)
                         #P.logger.info(res)
                         data = res.json()
