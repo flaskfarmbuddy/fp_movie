@@ -314,7 +314,7 @@ class Task(object):
                             'apikey': F.SystemModelSetting.get('apikey'),
                             'mode': 'ADD',
                         }
-                        if plex_info['DELAY'] != None:
+                        if plex_info.get('DELAY', None) != None:
                             time.sleep(int(plex_info['DELAY']))
                         res = requests.post(url, data=data)
                         #P.logger.info(res)
